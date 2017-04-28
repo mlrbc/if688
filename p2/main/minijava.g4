@@ -1,5 +1,9 @@
 grammar minijava;
 
+@header{
+    package main;
+}
+
 goal : mainClass ( classDeclaration )* EOF; //TODO: testar
 
 mainClass : 'class' IDENTIFIER '{' 'public' 'static' 'void' 'main' '(' 'String' '[' ']' IDENTIFIER ')' '{' statement '}' '}';
