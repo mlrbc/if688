@@ -19,18 +19,23 @@ public class Teste {
 			File folder = new File("testes");
 			File[] files = folder.listFiles();
 			int num = 0;
-			if (files != null) num = files.length;
-			for (int i=0; i < num; i++){
-				System.out.println("Testando " + files[i]);
-				InputStream stream = new FileInputStream(files[i]);
-				ANTLRInputStream input = new ANTLRInputStream(stream);
-				minijavaLexer lexer = new minijavaLexer(input);
-				CommonTokenStream token = new CommonTokenStream(lexer);
-				minijavaParser parser = new minijavaParser(token);
-				
-				Transforma t = new Transforma();
-				Program prog = t.visitGoal(parser.goal());
-				prog.accept(new PrettyPrintVisitor());
+			if (files != null) {
+				num = files.length;
+			
+				for (int i=0; i < num; i++){
+					System.out.println("Testando " + files[i]);
+					InputStream stream = new FileInputStream(files[i]);
+					ANTLRInputStream input = new ANTLRInputStream(stream);
+					minijavaLexer lexer = new minijavaLexer(input);
+					CommonTokenStream token = new CommonTokenStream(lexer);
+					minijavaParser parser = new minijavaParser(token);
+					
+					Transforma t = new Transforma();
+					Program prog = t.visitGoal(parser.goal());
+					prog.accept(new PrettyPrintVisitor());
+				}
+			} else {
+				System.out.println("Não foi possível ler nada, verifique o local do diretório testes. Se estiver no eclipse, ele deve estar no diretório do projeto que fica dentro do workspace.");
 			}
 		} catch (FileNotFoundException e){
 			System.out.println("Erro com a entrada de teste. " + e);
